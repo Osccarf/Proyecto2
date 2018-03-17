@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "103846874560",
+    "firebase_url": "https://imagenes-b75e3.firebaseio.com",
+    "project_id": "imagenes-b75e3",
+    "storage_bucket": "imagenes-b75e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103846874560:android:439737cf0665dc05",
+        "android_client_info": {
+          "package_name": "com.gimbal.android.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103846874560-sj9iku2pocpg1termgtcv908ge2snk6g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClXlyJ8ksKlZc3JyBliqMHGBwucvsFu-Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
