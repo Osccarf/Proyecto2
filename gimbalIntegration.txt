@@ -1,0 +1,96 @@
+public void onCreate() {
+        Gimbal.setApiKey(app, GIMBAL_APP_API_KEY);
+
+        events = new LinkedList<>(GimbalDAO.getEvents(app));
+
+        // Setup PlaceEventListener
+        placeEventListener = new PlaceEventListener() {
+
+            @Override
+            public void onVisitStart(Visit visit) {
+                //Toast.makeText(this, 1, Toast.LENGTH_SHORT).show();
+                //addEvent(new GimbalEvent(TYPE.PLACE_ENTER, visit.getPlace().getName(),
+                  //                       new Date(visit.getArrivalTimeInMillis())));
+
+
+            }
+
+            @Override
+            public void onVisitStartWithDelay(Visit visit, int delayTimeInSeconds) {
+                // if (delayTimeInSeconds > 0) {
+                //    addEvent(new GimbalEvent(TYPE.PLACE_ENTER_DELAY, visit.getPlace().getName(),
+                //                             new Date(System.currentTimeMillis())));
+                //}
+            }
+
+            @Override
+            public void onVisitEnd(Visit visit) {
+                 //addEvent(new GimbalEvent(TYPE.PLACE_EXIT, visit.getPlace().getName(),
+                   //                      new Date(visit.getDepartureTimeInMillis())));
+            }
+
+            public void onBeaconSighting(BeaconSighting sighting, List<Visit> visits){
+
+                addEvent(new GimbalEvent(TYPE.PLACE_EXIT, sighting.getBeacon().getName() + sighting.getRSSI(),
+                        new Date()));
+
+
+            }
+        };
+        PlaceManager.getInstance().addListener(placeEventListener);
+
+        // Setup CommunicationListener
+        communicationListener = new CommunicationListener() {
+            @Override
+            public Notification.Builder prepareCommunicationForDisplay(Communication communication,
+                                                                       Visit visit, int notificationId) {
+                addEvent(new GimbalEvent(TYPE.COMMUNICATION_PRESENTED,
+                        communication.getTitle() + ":  CONTENT_DELIVERED", new Date()));
+
+                // If you want a custom notification create and return it here
+                return null;
+            }
+
+            @Override
+            public Notification.Builder prepareCommunicationForDisplay(Communication communication,
+                                                                       Push push, int notificationId) {
+                addEvent(new GimbalEvent(TYPE.COMMUNICATION_INSTANT_PUSH,
+                        communication.getTitle() + ":  CONTENT_DELIVERED", new Date()));
+                // communication.getAttributes()
+
+                // If you want a custom notification create and return it here
+                return null;
+            }
+
+            @Override
+            public void onNotificationClicked(List<Communication> communications) {
+                for (Communication communication : communications) {
+                    if(communication != null) {
+                        addEvent(new GimbalEvent(TYPE.NOTIFICATION_CLICKED,
+                                communication.getTitle() + ": CONTENT_CLICKED", new Date()));
+                        Intent intent  = new Intent(appContext, AppActivity.class);
+                        intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                        appContext.startActivity(intent);
+                    }
+                }
+            }
+        };
+        CommunicationManager.getInstance().addListener(communicationListener);
+    }
+
+    private void addEvent(GimbalEvent event) {
+
+        if(events.isEmpty()){
+            Intent intent  = new Intent(appContext, DemoCamService.class);
+            appContext.startService(intent);
+        }
+
+        while (events.size() >= MAX_NUM_EVENTS) {
+            events.removeLast();
+        }
+
+        events.add(0, event);
+        GimbalDAO.setEvents(appContext, events);
+
+
+    }
