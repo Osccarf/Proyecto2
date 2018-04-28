@@ -1,7 +1,12 @@
 <ul>
   <li class="text" *ngFor="let item of itemsReal">
-    {{item}}
-  </li>
-</ul> 
 
-<pre><code>{{ meta | async }}</code></pre>
+    <div>
+      <img src="https://firebasestorage.googleapis.com/v0/b/test-131de.appspot.com/o/{{item}}profile.png?alt=media" width="300px"
+        height="300px" />
+    
+    </div>
+    <button (click)="obtenerFaceAPI(item)">Obtener FACE API!</button>
+
+  </li>
+</ul>
