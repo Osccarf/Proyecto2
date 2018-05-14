@@ -5,8 +5,6 @@ import {AppComponent} from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { FileUploadModule } from 'ng2-file-upload';
-
  
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
@@ -29,8 +27,7 @@ import { FaceapiService } from './services/faceapi.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    AngularFirestoreModule, // for database
-    FileUploadModule
+    AngularFirestoreModule // for database
   ],
   providers: [FaceapiService],
   bootstrap: [AppComponent]

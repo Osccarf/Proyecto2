@@ -2,11 +2,13 @@
   <li class="text" *ngFor="let item of itemsReal">
 
     <div>
-      <img src="https://firebasestorage.googleapis.com/v0/b/test-131de.appspot.com/o/{{item}}profile.png?alt=media" width="300px"
+      <img src="https://firebasestorage.googleapis.com/v0/b/imagenes-b75e3.appspot.com/o/{{item.id}}profile.png?alt=media" width="300px"
         height="300px" />
     
+        {{ item.item | json }}
+        {{ item.id }}
     </div>
-    <button (click)="obtenerFaceAPI(item)">Obtener FACE API!</button>
+    <button (click)="obtenerFaceAPI(item.id)">Obtener FACE API!</button>
 
   </li>
 </ul>
